@@ -12,7 +12,7 @@ For now it has:
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/crtu. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct. Aside from that feel free to send pull requests with useful code that you want to share.
+Bug reports and pull requests are welcome on GitHub at https://github.com/Th33x1l3/crtu. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct. Aside from that feel free to send pull requests with useful code that you want to share.
 
 
 ## License
