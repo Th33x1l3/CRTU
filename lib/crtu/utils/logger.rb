@@ -113,7 +113,7 @@ module Utils
 
 
     # Class wide console and file logger. Message appears on console output and it's stored on file
-    def mix_logger
+    def all_logger
       log_file = (LOCAL_LOGGER_LOG_FILE.nil?) ? "/tmp/" + self.class.to_s + ".log" : LOCAL_LOGGER_LOG_FILE
       @logger = Log4r::Logger.new("LocalLoggerConsoleAndFile")
       pf = PatternFormatter.new(:pattern => "[%l] : #{self.class} @ %d : %M")

@@ -1,3 +1,6 @@
+[![Gem Version](https://badge.fury.io/rb/crtu.svg)](https://badge.fury.io/rb/crtu)
+[![Build Status](https://travis-ci.org/Th33x1l3/CRTU.svg?branch=master)](https://travis-ci.org/Th33x1l3/CRTU)
+
 CRTU
 
 Cucumber Ruby Test Utilities
