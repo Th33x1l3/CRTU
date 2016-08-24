@@ -85,7 +85,7 @@ def run_and_check_for_exception(task_name)
   puts "*** Running #{task_name} features ***"
   begin
     Rake::Task["features:#{task_name}"].invoke
-  rescue Exception => e
+  rescue StandardError
     return false
   end
   true
