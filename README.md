@@ -1,6 +1,9 @@
 [![Gem Version](https://badge.fury.io/rb/crtu.svg)](https://badge.fury.io/rb/crtu)
 [![Build Status](https://travis-ci.org/Th33x1l3/CRTU.svg?branch=master)](https://travis-ci.org/Th33x1l3/CRTU)
 
+[![Code Climate](https://codeclimate.com/github/Th33x1l3/CRTU/badges/gpa.svg)](https://codeclimate.com/github/Th33x1l3/CRTU)
+[![Test Coverage](https://codeclimate.com/github/Th33x1l3/CRTU/badges/coverage.svg)](https://codeclimate.com/github/Th33x1l3/CRTU/coverage)
+[![Issue Count](https://codeclimate.com/github/Th33x1l3/CRTU/badges/issue_count.svg)](https://codeclimate.com/github/Th33x1l3/CRTU)
 CRTU
 
 Cucumber Ruby Test Utilities
