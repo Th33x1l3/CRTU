@@ -34,9 +34,9 @@ file_logger.<level> "MESSAGE TO LOG"
 all_logger.<level> "MESSAGE TO LOG"
 ```
 
-`console_logger` logs message only to stdout
-`file_logger` logs to a file
-`all_logger` logs to both console and file
+- `console_logger` logs message only to stdout
+- `file_logger` logs to a file
+- `all_logger` logs to both console and file
 
 # Contributing
 
