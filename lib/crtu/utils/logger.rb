@@ -107,7 +107,7 @@ module Utils
     # Class simple file logger. Message is stored in file, but
     # it does not appear on stdout
     def file_logger
-      log_file = (LOCAL_LOGGER_LOG_FILE.nil?) ? File.join(Dir.tmpdir , "#{self.class.to_s}.log") : LOCAL_LOGGER_LOG_FILE
+      log_file = (LOCAL_LOGGER_LOG_FILE.nil?) ? File.join(Dir.tmpdir , "#{self.class}.log") : LOCAL_LOGGER_LOG_FILE
       @logger = Log4r::Logger.new('LocalLoggerFile')
       pf = PatternFormatter.new(:pattern => "[%l] : #{self.class} @ %d : %M")
 
@@ -124,7 +124,7 @@ module Utils
 
     # Class wide console and file logger. Message appears on console output and it's stored on file
     def all_logger
-      log_file = (LOCAL_LOGGER_LOG_FILE.nil?) ? File.join(Dir.tmpdir , "#{self.class.to_s}.log") : LOCAL_LOGGER_LOG_FILE
+      log_file = (LOCAL_LOGGER_LOG_FILE.nil?) ? File.join(Dir.tmpdir , "#{self.class}.log") : LOCAL_LOGGER_LOG_FILE
       @logger = Log4r::Logger.new('LocalLoggerConsoleAndFile')
       pf = PatternFormatter.new(:pattern => "[%l] : #{self.class} @ %d : %M")
 
