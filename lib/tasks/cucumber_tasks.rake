@@ -54,7 +54,7 @@ namespace :features do
   end
 
 
-  desc "Run features with given tags - OR joing"
+  desc 'Run features with given tags - OR joining'
   task :run_with_tags, [:tags] do |t,args|
     if args[:tags].is_a?(String)
       tags_line = args[:tags]
@@ -67,15 +67,15 @@ namespace :features do
   end
 end
 
-desc "Run complete feature build"
+desc 'Run complete feature build'
 task :cruise do
-  finished_successful = run_and_check_for_exception("finished")
-  in_progress_successful = run_and_check_for_exception("in_progress")
+  finished_successful = run_and_check_for_exception('finished')
+  in_progress_successful = run_and_check_for_exception('in_progress')
 
   unless finished_successful && in_progress_successful
     puts
-    puts("Finished features had failing steps") unless finished_successful
-    puts("In-progress Scenario/s passed when they should fail or be pending") unless in_progress_successful
+    puts('Finished features had failing steps') unless finished_successful
+    puts('In-progress Scenario/s passed when they should fail or be pending') unless in_progress_successful
     puts
     raise BuildFailure
   end
@@ -85,7 +85,7 @@ def run_and_check_for_exception(task_name)
   puts "*** Running #{task_name} features ***"
   begin
     Rake::Task["features:#{task_name}"].invoke
-  rescue Exception => e
+  rescue StandardError
     return false
   end
   true
