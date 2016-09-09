@@ -2,10 +2,12 @@ require 'rubygems'
 require 'singleton'
 require 'fileutils'
 require 'log4r'
+require 'tmpdir'
 include Log4r
 
 GLOBAL_LOGGER_FOLDER = File.join(Dir.pwd, 'logs')
 GLOBAL_LOGGER_LOG_FILE = File.join(GLOBAL_LOGGER_FOLDER, 'logfile.log')
+SECONDS_IN_DAY ||= 86400
 
 class GlobalLogger
   include Singleton
@@ -24,17 +26,21 @@ class GlobalLogger
       FileUtils.mkdir_p(GLOBAL_LOGGER_FOLDER)
     end
 
-    @global_console_logger= Log4r::Logger.new("GlobalLoggerConsole")
-    @global_file_logger = Log4r::Logger.new("GlobalLoggerFile")
-    @global_mix_logger = Log4r::Logger.new("GlobalLoggerConsoleAndFile")
+    @global_console_logger= Log4r::Logger.new('GlobalLoggerConsole')
+    @global_file_logger = Log4r::Logger.new('GlobalLoggerFile')
+    @global_mix_logger = Log4r::Logger.new('GlobalLoggerConsoleAndFile')
 
     pf = PatternFormatter.new(:pattern => "[%l] @ %d : %M")
 
-    so = StdoutOutputter.new("console", :formatter => pf)
+    so = StdoutOutputter.new('console', :formatter => pf)
     @global_console_logger.outputters << so
     @global_console_logger.level = DEBUG
 
-    fo = FileOutputter.new("f1", :filename => GLOBAL_LOGGER_LOG_FILE, :trunc => false, :formatter => pf)
+    fo = RollingFileOutputter .new('f1',
+                                   filename: GLOBAL_LOGGER_LOG_FILE,
+                                   trunc: false,
+                                   :formatter => pf,
+                                   maxtime: SECONDS_IN_DAY )
     @global_file_logger.outputters << fo
     @global_file_logger.level = DEBUG
 
@@ -89,10 +95,10 @@ module Utils
     # Class console logger. The messages only go to the stdout
     # No message is saved to file
     def console_logger
-      @logger = Log4r::Logger.new("LocalLoggerConsole")
+      @logger = Log4r::Logger.new('LocalLoggerConsole')
       pf = PatternFormatter.new(:pattern => "[%l] : #{self.class} @ %d : %M")
 
-      so = StdoutOutputter.new("console", :formatter => pf)
+      so = StdoutOutputter.new('console', :formatter => pf)
       @logger.outputters << so
       @logger.level = DEBUG
       @logger
@@ -101,11 +107,15 @@ module Utils
     # Class simple file logger. Message is stored in file, but
     # it does not appear on stdout
     def file_logger
-      log_file = (LOCAL_LOGGER_LOG_FILE.nil?) ? "/tmp/" + self.class.to_s + ".log" : LOCAL_LOGGER_LOG_FILE
-      @logger = Log4r::Logger.new("LocalLoggerFile")
+      log_file = (LOCAL_LOGGER_LOG_FILE.nil?) ? File.join(Dir.tmpdir , "#{self.class.to_s}.log") : LOCAL_LOGGER_LOG_FILE
+      @logger = Log4r::Logger.new('LocalLoggerFile')
       pf = PatternFormatter.new(:pattern => "[%l] : #{self.class} @ %d : %M")
 
-      fo = FileOutputter.new("f1", :filename => log_file, :trunc => false, :formatter => pf)
+      fo = RollingFileOutputter.new('f1',
+                                    filename: log_file,
+                                    trunc: false,
+                                    formatter: pf,
+                                    maxtime: Utils::SECONDS_IN_DAY)
       @logger.outputters << fo
       @logger.level = DEBUG
       @logger
@@ -114,12 +124,16 @@ module Utils
 
     # Class wide console and file logger. Message appears on console output and it's stored on file
     def all_logger
-      log_file = (LOCAL_LOGGER_LOG_FILE.nil?) ? "/tmp/" + self.class.to_s + ".log" : LOCAL_LOGGER_LOG_FILE
-      @logger = Log4r::Logger.new("LocalLoggerConsoleAndFile")
+      log_file = (LOCAL_LOGGER_LOG_FILE.nil?) ? File.join(Dir.tmpdir , "#{self.class.to_s}.log") : LOCAL_LOGGER_LOG_FILE
+      @logger = Log4r::Logger.new('LocalLoggerConsoleAndFile')
       pf = PatternFormatter.new(:pattern => "[%l] : #{self.class} @ %d : %M")
 
-      so = StdoutOutputter.new("console", :formatter => pf)
-      fo = FileOutputter.new("f1", :filename => log_file, :trunc => false, :formatter => pf)
+      so = StdoutOutputter.new('console', :formatter => pf)
+      fo = RollingFileOutputter.new('f1',
+                                    filename: log_file,
+                                    trunc: false,
+                                    formatter: pf,
+                                    maxtime: Utils::SECONDS_IN_DAY)
 
       @logger.outputters << so
       @logger.outputters << fo
