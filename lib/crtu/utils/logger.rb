@@ -115,7 +115,7 @@ module Utils
                                     filename: log_file,
                                     trunc: false,
                                     formatter: pf,
-                                    maxtime: Utils::SECONDS_IN_DAY)
+                                    maxtime: SECONDS_IN_DAY)
       @logger.outputters << fo
       @logger.level = DEBUG
       @logger
@@ -133,7 +133,7 @@ module Utils
                                     filename: log_file,
                                     trunc: false,
                                     formatter: pf,
-                                    maxtime: Utils::SECONDS_IN_DAY)
+                                    maxtime: SECONDS_IN_DAY)
 
       @logger.outputters << so
       @logger.outputters << fo
