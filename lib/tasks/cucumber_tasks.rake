@@ -88,7 +88,7 @@ task :run_cucumber_feature, [:feature_name] do |t,args|
    filefolders.each do |folder|
      filepath = File.join(filepath,folder)
    end
-   filepath = File.join(filename.basename)
+   filepath = File.join(File.basename(filename))
  end
 
   Cucumber::Rake::Task.new(t) do |c|
