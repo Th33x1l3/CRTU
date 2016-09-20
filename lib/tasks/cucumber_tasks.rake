@@ -69,30 +69,11 @@ namespace :features do
 end
 
 
-desc 'Run specific feature file'
+desc 'Run specific feature file by name'
 task :run_cucumber_feature, [:feature_name] do |t,args|
-  if File.extname(args[:feature_name].to_s).empty?
-    filename = "#{args[:feature_name]}.feature"
-  else
-    filename = :feature_name.to_s
-  end
-
-  #if we only give filename, no paths behind
- if File.dirname(filename).empty?
-   filepath = File.join(Dir.pwd, 'features', filename)
- else
-   # we shoud extract each pathname and process it
-   filefolders = File.dirname(filename).split(File::SEPARATOR)
-   filepath = File.join(Dir.pwd, 'features')
-
-   filefolders.each do |folder|
-     filepath = File.join(filepath,folder)
-   end
-   filepath = File.join(filepath, File.basename(filename))
- end
 
   Cucumber::Rake::Task.new(t) do |c|
-    c.cucumber_opts = "-r #{filepath} --format progress --out reports/progress.out --format html --out reports/report.html  --format json --out reports/cucumber.json"
+    c.cucumber_opts = "features --name #{args[:feature_name]} --format progress --out reports/progress.out --format html --out reports/report.html  --format json --out reports/cucumber.json"
   end
 
 
