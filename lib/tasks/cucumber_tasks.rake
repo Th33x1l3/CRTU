@@ -71,7 +71,7 @@ end
 
 desc 'Run specific feature file'
 task :run_cucumber_feature, [:feature_name] do |t,args|
-  if File.extname(:feature_name).empty?
+  if File.extname(:feature_name.to_s).empty?
     filename = "#{:feature_name}.feature"
   else
     filename = :feature_name.to_s
