@@ -1,5 +1,6 @@
 require 'cucumber/rake/task'
 require 'fileutils'
+require 'pathname'
 
 class BuildFailure < Exception;
   def initialize(message = nil)
@@ -65,6 +66,36 @@ namespace :features do
       c.cucumber_opts = "-r features/ --format progress --out reports/progress.out --format html --out reports/report.html  --format json --out reports/cucumber.json --tags #{tags_line}"
     end
   end
+end
+
+
+desc 'Run specific feature file'
+task :run_cucumber_feature, [:feature_name] do |t,args|
+  if File.extname(:feature_name).empty?
+    filename = "#{:feature_name}.feature"
+  else
+    filename = :feature_name.to_s
+  end
+
+  #if we only give filename, no paths behind
+ if File.dirname(filename).empty?
+   filepath = File.join(Dir.pwd, 'features', filename)
+ else
+   # we shoud extract each pathname and process it
+   filefolders = File.dirname(filename).split(File::SEPARATOR)
+   filepath = File.join(Dir.pwd, 'features')
+
+   filefolders.each do |folder|
+     filepath = File.join(filepath,folder)
+   end
+   filepath = File.join(filename.basename)
+ end
+
+  Cucumber::Rake::Task.new(t) do |c|
+    c.cucumber_opts = "-r #{filepath} --format progress --out reports/progress.out --format html --out reports/report.html  --format json --out reports/cucumber.json"
+  end
+
+
 end
 
 desc 'Run complete feature build'
